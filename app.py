@@ -3,6 +3,7 @@ from flask import Flask,render_template,request,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy 
 
 app = Flask(__name__)
+
 #config variables
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -20,9 +21,9 @@ class Todo_List(db.Model):
 @app.route('/')
 def index():
     #show all todos
-    todo = Todo_List.query.all()
-    print(todo)
+    todo= Todo_List.query.all()
     return render_template('base.html',todo=todo)
+
 
 
 @app.route('/add',methods=["POST"])
@@ -33,6 +34,7 @@ def add():
     db.session.add(new_todo)
     db.session.commit()
     return redirect(url_for("index"))
+
 
 @app.route('/view/<int:todo_id>')
 def view(todo_id):
@@ -45,7 +47,7 @@ def view(todo_id):
 
 @app.route('/mark/<int:todo_id>')
 def mark(todo_id):
-    # mark todo task as read
+    # mark todo task as read    
     todo = Todo_List.query.all()
     mytodo = Todo_List.query.filter_by(id=todo_id).first()
     mytodo.done = not mytodo.done
@@ -62,7 +64,24 @@ def delete(todo_id):
     return redirect(url_for("index"))
 
 
+@app.route('/complete',methods=["GET"])
+def complete():
+    # filter done and not done
+    todo = Todo_List.query.filter_by(done=True).all()
+    print(todo)
+    return render_template("base.html",todo=todo)
 
+
+@app.route('/incomplete',methods=["GET"])
+def incomplete():
+    # filter done and not done
+    todo = Todo_List.query.filter_by(done=False).all()
+    print(todo)
+    return render_template("base.html",todo=todo)
+
+@app.route('/')
+def back():
+    return redirect(url_for("index"))
 
 
 

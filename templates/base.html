@@ -8,10 +8,14 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
 </head>
+
+
 <body>
     <div style="margin-top: 50px;"class="ui container">
     <h1 class="ui center aligned header">Todo-List</h1>
+
     <form action="/add" method="post">
         <div class="field">
          <label for="title">Todo Title</label>
@@ -19,6 +23,25 @@
          <button class="ui blue button" type="submit">Add</button>
         </div>
     </form>
+    <div>
+
+    <form action="/complete" method='get'>
+        <div class="field">
+        <button class ="ui blue button"style="margin:5px"type="submit">Done</button>
+        </div>
+    </form>
+
+
+    </div>
+
+    <div>
+        <form action="/incomplete" method="get">
+        <div class="field">
+            <button class ="ui green button" type="submit">Not Done</button>
+        </div>
+        
+        </form>
+    </div>
 
     {% for i in todo%}
 
